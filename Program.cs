@@ -34,7 +34,7 @@ namespace ConsoleApp1
                     WebClient webClient = new WebClient();
                     try
                     {
-                        webClient.DownloadFile("https://s3.zylowski.net/public/input/5.txt", "@5.txt");
+                        webClient.DownloadFile("https://s3.zylowski.net/public/input/5.txt", "5.txt");
                     }
                     finally { }
                 }
@@ -43,14 +43,14 @@ namespace ConsoleApp1
                     Console.Clear();
                     try
                     {
-                        string text = System.IO.File.ReadAllText("@5.txt");
+                        string text = System.IO.File.ReadAllText("5.txt");
                         if (text != null)
                         {
                             if (text == null)
                             {
                                 Console.WriteLine("Brak pliku ");
                                 break;
-                            }
+                            }     
                             foreach (char znak in text)
                             {
                                 if (char.IsLetter(znak) == true)
@@ -61,8 +61,9 @@ namespace ConsoleApp1
                             Console.WriteLine("Ilość liter = " + characters);
                         }
                     }
-                    finally
+                    catch
                     {
+                        Console.WriteLine("error");
                     }
                 }
                 if (x == 3)
@@ -70,7 +71,7 @@ namespace ConsoleApp1
                     Console.Clear();
                     try
                     {
-                        string text = System.IO.File.ReadAllText("@5.txt");
+                        string text = System.IO.File.ReadAllText("5.txt");
                         if (text != null)
                         {
                             if (text == null)
@@ -89,8 +90,9 @@ namespace ConsoleApp1
                             Console.WriteLine("Ilosc slow: " + words);
                         }
                     }
-                    finally
+                    catch
                     {
+                        Console.WriteLine("error");
                     }
                 }
                 if (x == 4)
@@ -98,7 +100,7 @@ namespace ConsoleApp1
                     Console.Clear();
                     try
                     {
-                        string text = System.IO.File.ReadAllText("@5.txt");
+                        string text = System.IO.File.ReadAllText("5.txt");
                         if (text != null)
                         {
                             if (text == null)
@@ -109,7 +111,7 @@ namespace ConsoleApp1
                             foreach (char znak in text)
                             {
                                 string a = Convert.ToString(znak);
-                                if (char.IsLetter(znak) != true && a != " ")
+                                if (char.IsLetter(znak) != true && a!= " ")
                                 {
                                     punctuationmarks++;
                                 }
@@ -117,8 +119,9 @@ namespace ConsoleApp1
                             Console.WriteLine("Ilość znakow interpunkcyjnych = " + punctuationmarks);
                         }
                     }
-                    finally
+                    catch
                     {
+                        Console.WriteLine("error");
                     }
                 }
                 if (x == 5)
@@ -126,7 +129,7 @@ namespace ConsoleApp1
                     Console.Clear();
                     try
                     {
-                        string text = System.IO.File.ReadAllText("@5.txt");
+                        string text = System.IO.File.ReadAllText("5.txt");
                         if (text != null)
                         {
                             if (text == null)
@@ -145,8 +148,9 @@ namespace ConsoleApp1
                             Console.WriteLine("Ilosc zdan: " + sentences);
                         }
                     }
-                    finally
+                    catch
                     {
+                        Console.WriteLine("error");
                     }
                 }
                 if (x == 6)
@@ -154,7 +158,7 @@ namespace ConsoleApp1
                     Console.Clear();
                     try
                     {
-                        string text = System.IO.File.ReadAllText("@5.txt");
+                        string text = System.IO.File.ReadAllText("5.txt");
                         if (text != null)
                         {
                             int[] character = new int[(int)char.MaxValue];
@@ -170,21 +174,23 @@ namespace ConsoleApp1
                                 }
                             }
                         }
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        Console.WriteLine("Błąd nie ma pliku");
-                    }
-                }
-                if (x == 7)
-                {
-                    string[] lines = { "Litery: " + characters.ToString(), "Słowa: " + words.ToString(), "Znaki interpunkcyjne: " + punctuationmarks.ToString(), "Zdania: " + sentences.ToString() };
-                    System.IO.File.WriteAllLines(@"C:\Users\studentwsb\Desktop\statystyki.txt", lines);
+                 }
+                 catch
+                 {
+                    Console.WriteLine("error");
+                 }
+              }
+              if (x == 7)
+              {
+                    string[] lines = {"Litery: " + characters.ToString(), "Słowa: " + words.ToString(), "Znaki interpunkcyjne: " + punctuationmarks.ToString(), "Zdania: " + sentences.ToString()};
+                    System.IO.File.WriteAllLines("statystyki.txt", lines);
                 }
                 if (x == 8)
-                {
+              {
+                    System.IO.File.Delete("statystyki.txt");
+                    System.IO.File.Delete("5.txt");
                     System.Environment.Exit(0);
-                }
+              } 
             }
             while (x != 8);
         }
