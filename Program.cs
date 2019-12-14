@@ -100,22 +100,18 @@ namespace ConsoleApp1
                     Console.Clear();
                     try
                     {
-                        string text = System.IO.File.ReadAllText("5.txt");
-                        if (text != null)
+                        int i, countPuncMarks = 0;
+                        char  text = System.IO.File.ReadAllText("5.txt");
+                        
                         {
-                            if (text == null)
+                            for (i = 0; i < strlen(str); i++)
                             {
-                                Console.WriteLine("Brak pliku ");
-                                break;
-                            }
-                            foreach (char znak in text)
-                            {
-                                string a = Convert.ToString(znak);
-                                if (char.IsLetter(znak) != true && a!= " ")
+                                if (str[i] == '!' || str[i] == ',' ||  str[i] == '.' || str[i] == '?')
+                                
                                 {
-                                    punctuationmarks++;
+                                    countPuncMarks++;
                                 }
-                            }
+                                }
                             Console.WriteLine("Ilość znakow interpunkcyjnych = " + punctuationmarks);
                         }
                     }
