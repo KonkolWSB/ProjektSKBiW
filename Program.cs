@@ -50,7 +50,7 @@ namespace ConsoleApp1
                             {
                                 Console.WriteLine("Brak pliku ");
                                 break;
-                            }     
+                            }
                             foreach (char znak in text)
                             {
                                 if (char.IsLetter(znak) == true)
@@ -111,12 +111,12 @@ namespace ConsoleApp1
                             foreach (char znak in text)
                             {
                                 string a = Convert.ToString(znak);
-                                if (char.IsLetter(znak) != true && a!= " ")
+                                if (a=="?" || a == "."  )
                                 {
                                     punctuationmarks++;
                                 }
                             }
-                            Console.WriteLine("Ilość znakow interpunkcyjnych = " + punctuationmarks);
+                            Console.WriteLine("Ilość znakow '?', '.' = " + punctuationmarks);
                         }
                     }
                     catch
@@ -174,23 +174,23 @@ namespace ConsoleApp1
                                 }
                             }
                         }
-                 }
-                 catch
-                 {
-                    Console.WriteLine("error");
-                 }
-              }
-              if (x == 7)
-              {
-                    string[] lines = {"Litery: " + characters.ToString(), "Słowa: " + words.ToString(), "Znaki interpunkcyjne: " + punctuationmarks.ToString(), "Zdania: " + sentences.ToString()};
+                    }
+                    catch
+                    {
+                        Console.WriteLine("error");
+                    }
+                }
+                if (x == 7)
+                {
+                    string[] lines = { "Litery: " + characters.ToString(), "Słowa: " + words.ToString(), "Znaki interpunkcyjne: " + punctuationmarks.ToString(), "Zdania: " + sentences.ToString() };
                     System.IO.File.WriteAllLines("statystyki.txt", lines);
                 }
                 if (x == 8)
-              {
+                {
                     System.IO.File.Delete("statystyki.txt");
                     System.IO.File.Delete("5.txt");
                     System.Environment.Exit(0);
-              } 
+                }
             }
             while (x != 8);
         }
