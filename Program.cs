@@ -40,7 +40,7 @@ namespace ConsoleApp1
                     }
 
                 }
-                if(x == 3)
+                if (x == 3)
                 {
                     Console.Clear();
                     try
@@ -54,7 +54,7 @@ namespace ConsoleApp1
                                 break;
                             }
                             int words = 0;
-                                foreach (char znak in text)
+                            foreach (char znak in text)
                             {
                                 string a = Convert.ToString(znak);
                                 if (a == " ")
@@ -69,6 +69,11 @@ namespace ConsoleApp1
                     {
 
                     }
+                    if (x == 8)
+                    {
+                        System.Environment.Exit(0);
+                    }
+                        
                 }
             }
             while (x != 8);
