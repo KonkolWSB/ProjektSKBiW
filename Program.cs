@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using System.IO;
 
 namespace ConsoleApp1
 {
     class Program
     {
         static void Main(string[] args)
-        { int x;
-            
+        {
+            int x;
 
             do
             {
@@ -24,36 +26,50 @@ namespace ConsoleApp1
                 System.Console.WriteLine("8 - wyjdz z programu");
                 x = Convert.ToInt32(Console.ReadLine());
 
-                if (x == 2)
+
+                if (x == 1)
                 {
+                    WebClient webClient = new WebClient();
                     try
                     {
-                        
-                        string text = System.IO.File.ReadAllText(@"5.txt");
+                        webClient.DownloadFile("https://s3.zylowski.net/public/input/5.txt", "@5.txt");
+                    }
+                    finally
+                    {
+
+                    }
+
+                }
+                if(x == 3)
+                {
+                    Console.Clear();
+                    try
+                    {
+                        string text = System.IO.File.ReadAllText("@5.txt");
                         if (text != null)
                         {
                             if (text == null)
                             {
-                                Console.WriteLine("Brak pliku ");
+                                Console.WriteLine("Blad");
                                 break;
                             }
-                            int count = 0;
-                            foreach (char y in text)
+                            int words = 0;
+                                foreach (char znak in text)
                             {
-                                string n = Convert.ToString(y);
-                                if (n != "," && n != "." && n != ";" && n != "'" && n != "?" && n != "!" && n != "-" && n != ":")
+                                string a = Convert.ToString(znak);
+                                if (a == " ")
                                 {
-                                    count++;
-
+                                    words++;
                                 }
-
                             }
-                            Console.WriteLine("Ilość liter w pliku : " + count);
+                            Console.WriteLine("Ilosc slow: " + words);
                         }
+                    }
+                    finally
+                    {
 
                     }
-
-
+                }
             }
             while (x != 8);
 
