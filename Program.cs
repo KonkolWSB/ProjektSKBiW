@@ -13,88 +13,58 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             int x;
-
+            int characters = 0;
+            int words = 0;
+            int punctuationmarks = 0;
+            int sentences = 0;
             do
             {
-                System.Console.WriteLine("1 - Wybierz plik wejściowy”");
+                System.Console.WriteLine("1 - pobierz plik z internetu");
                 System.Console.WriteLine("2 - zlicz liczbę liter z pliku");
                 System.Console.WriteLine("3 - zlicz liczbę wyrazów z pliku");
                 System.Console.WriteLine("4 - zlicz liczbe znaków interpunkcyjnych");
                 System.Console.WriteLine("5 - zlicz liczbe zdan w pliku");
                 System.Console.WriteLine("6 - wygeneruj raport o uzyciu liter");
-                System.Console.WriteLine("7 - zapisz statystyku");
+                System.Console.WriteLine("7 - zapisz statystyke");
                 System.Console.WriteLine("8 - wyjdz z programu");
                 x = Convert.ToInt32(Console.ReadLine());
 
-
                 if (x == 1)
-                { System.Console.WriteLine("Czy plik jest pobierany z internetu? [Y/N]");
-                        y = Console.ReadLine();
-                        if (y == "y" || y = "Y")
+                {
+                    WebClient webClient = new WebClient();
+                    try
                     {
-                        System.Console.WriteLine("podaj adres pliku");
-                        adres = Console.ReadLine();
-                        WebClient webClient = new WebClient();
-                        try
-                        {
-                            webClient.DownloadFile( adres, "@5.txt");
-                        }
-                        finally
-                        {
-
-                        }
+                        webClient.DownloadFile("https://s3.zylowski.net/public/input/5.txt", "@5.txt");
                     }
-                    if (y == "N" || y = "n")
+                    finally { }
+                }
+                if (x == 2)
+                {
+                    Console.Clear();
+                    try
                     {
-                        System.Console.WriteLine("podaj nazwę pliku");
-                        name = Console.ReadLine();
-                        try
+                        string text = System.IO.File.ReadAllText("@5.txt");
+                        if (text != null)
                         {
-                            System.Diagnostics.Process.Start(name + ".doc");
-                        }
-                        catch
-                        {
-                            System.Console.WriteLine("Bład nie znaleziono pliku");
-                        }
-                       
-                    }
-                    if (y == "n" || y == "n" || y == "n" || y == "n")
-                    {
-                        System.Console.WriteLine("błąd wyboru");
-                    }
-                        if (x == 2)
-                    {
-                        try
-                        {
-
-                            string text = System.IO.File.ReadAllText(@"5.txt");
-                            if (text != null)
+                            if (text == null)
                             {
-                                if (text == null)
-                                {
-                                    Console.WriteLine("Brak pliku ");
-                                    break;
-                                }
-                                int count = 0;
-                                foreach (char y in text)
-                                {
-                                    string n = Convert.ToString(y);
-                                    if (n != "," || n != "." || n != ";" || n != "'" || n != "?" || n != "!" || n != "-" || n != ":")
-                                    {
-                                        count++;
-
-                                    }
-
-                                }
-                                Console.WriteLine("Ilość liter = " + count);
+                                Console.WriteLine("Brak pliku ");
+                                break;
                             }
-
+                            foreach (char znak in text)
+                            {
+                                if (char.IsLetter(znak) == true)
+                                {
+                                    characters++;
+                                }
+                            }
+                            Console.WriteLine("Ilość liter = " + characters);
                         }
-                        catch { }
-
+                    }
+                    finally
+                    {
                     }
                 }
-              
                 if (x == 3)
                 {
                     Console.Clear();
@@ -108,7 +78,6 @@ namespace ConsoleApp1
                                 Console.WriteLine("Blad");
                                 break;
                             }
-                            int words = 0;
                             foreach (char znak in text)
                             {
                                 string a = Convert.ToString(znak);
@@ -122,53 +91,102 @@ namespace ConsoleApp1
                     }
                     finally
                     {
-
                     }
-
-                    if (x == 6)
+                }
+                if (x == 4)
+                {
+                    Console.Clear();
+                    try
                     {
-                        Console.Clear();
-                        try
+                        string text = System.IO.File.ReadAllText("@5.txt");
+                        if (text != null)
                         {
-                            string text = System.IO.File.ReadAllText(@"5.txt");
-                            if (text != null)
+                            if (text == null)
                             {
-
-                                int[] character = new int[(int)char.MaxValue];
-
-                                foreach (char tp in text)
+                                Console.WriteLine("Brak pliku ");
+                                break;
+                            }
+                            foreach (char znak in text)
+                            {
+                                string a = Convert.ToString(znak);
+                                if (char.IsLetter(znak) != true && a != " ")
                                 {
-
-                                    character[(int)tp]++;
+                                    punctuationmarks++;
                                 }
-
-
-                                for (int i = 0; i < (int)char.MaxValue; i++)
+                            }
+                            Console.WriteLine("Ilość znakow interpunkcyjnych = " + punctuationmarks);
+                        }
+                    }
+                    finally
+                    {
+                    }
+                }
+                if (x == 5)
+                {
+                    Console.Clear();
+                    try
+                    {
+                        string text = System.IO.File.ReadAllText("@5.txt");
+                        if (text != null)
+                        {
+                            if (text == null)
+                            {
+                                Console.WriteLine("Blad");
+                                break;
+                            }
+                            foreach (char znak in text)
+                            {
+                                string a = Convert.ToString(znak);
+                                if (a == ".")
                                 {
-                                    if (character[i] > 0 && char.IsLetterOrDigit((char)i))
-                                    {
-                                        Console.WriteLine("{0},{1}", (char)i, character[i]);
-                                    }
+                                    sentences++;
                                 }
-
-
+                            }
+                            Console.WriteLine("Ilosc zdan: " + sentences);
+                        }
+                    }
+                    finally
+                    {
+                    }
+                }
+                if (x == 6)
+                {
+                    Console.Clear();
+                    try
+                    {
+                        string text = System.IO.File.ReadAllText("@5.txt");
+                        if (text != null)
+                        {
+                            int[] character = new int[(int)char.MaxValue];
+                            foreach (char tp in text)
+                            {
+                                character[(int)tp]++;
+                            }
+                            for (int i = 0; i < (int)char.MaxValue; i++)
+                            {
+                                if (character[i] > 0 && char.IsLetter((char)i))
+                                {
+                                    Console.WriteLine("{0}-{1}", (char)i, character[i]);
+                                }
                             }
                         }
-
-                        catch (FileNotFoundException e)
-                        {
-                            Console.WriteLine("Błąd nie ma pliku");
-                        }
                     }
-                    if (x == 8)
+                    catch (FileNotFoundException e)
                     {
-                        System.Environment.Exit(0);
+                        Console.WriteLine("Błąd nie ma pliku");
                     }
-                        
+                }
+                if (x == 7)
+                {
+                    string[] lines = { "Litery: " + characters.ToString(), "Słowa: " + words.ToString(), "Znaki interpunkcyjne: " + punctuationmarks.ToString(), "Zdania: " + sentences.ToString() };
+                    System.IO.File.WriteAllLines(@"C:\Users\studentwsb\Desktop\statystyki.txt", lines);
+                }
+                if (x == 8)
+                {
+                    System.Environment.Exit(0);
                 }
             }
             while (x != 8);
-
         }
     }
 }
