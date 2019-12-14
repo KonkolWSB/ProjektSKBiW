@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +9,8 @@ namespace ConsoleApp1
     class Program
     {
         static void Main(string[] args)
-        {
-            int x;
+        { int x;
+            
 
             do
             {
@@ -26,20 +24,35 @@ namespace ConsoleApp1
                 System.Console.WriteLine("8 - wyjdz z programu");
                 x = Convert.ToInt32(Console.ReadLine());
 
-                
-                    if (x == 1)
+                if (x == 2)
                 {
-                    WebClient webClient = new WebClient();
                     try
                     {
-                        webClient.DownloadFile("https://s3.zylowski.net/public/input/5.txt", "5.txt");
-                    }
-                    finally
-                    {
+                        
+                        string text = System.IO.File.ReadAllText(@"5.txt");
+                        if (text != null)
+                        {
+                            if (text == null)
+                            {
+                                Console.WriteLine("Brak pliku ");
+                                break;
+                            }
+                            int count = 0;
+                            foreach (char y in text)
+                            {
+                                string n = Convert.ToString(y);
+                                if (n != "," && n != "." && n != ";" && n != "'" && n != "?" && n != "!" && n != "-" && n != ":")
+                                {
+                                    count++;
 
-                    }   
-                    
-                }
+                                }
+
+                            }
+                            Console.WriteLine("Ilość liter w pliku : " + count);
+                        }
+
+                    }
+
 
             }
             while (x != 8);
@@ -47,8 +60,3 @@ namespace ConsoleApp1
         }
     }
 }
-
-
-
-
-
