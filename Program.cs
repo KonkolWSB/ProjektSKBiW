@@ -16,7 +16,7 @@ namespace ConsoleApp1
 
             do
             {
-                System.Console.WriteLine("1 - pobierz plik z internetu");
+                System.Console.WriteLine("1 - Wybierz plik wejściowy”");
                 System.Console.WriteLine("2 - zlicz liczbę liter z pliku");
                 System.Console.WriteLine("3 - zlicz liczbę wyrazów z pliku");
                 System.Console.WriteLine("4 - zlicz liczbe znaków interpunkcyjnych");
@@ -28,17 +28,41 @@ namespace ConsoleApp1
 
 
                 if (x == 1)
-                {
-                    WebClient webClient = new WebClient();
-                    try
+                { System.Console.WriteLine("Czy plik jest pobierany z internetu? [Y/N]");
+                        y = Console.ReadLine();
+                        if (y == "y" || y = "Y")
                     {
-                        webClient.DownloadFile("https://s3.zylowski.net/public/input/5.txt", "@5.txt");
-                    }
-                    finally
-                    {
+                        System.Console.WriteLine("podaj adres pliku");
+                        adres = Console.ReadLine();
+                        WebClient webClient = new WebClient();
+                        try
+                        {
+                            webClient.DownloadFile( adres, "@5.txt");
+                        }
+                        finally
+                        {
 
+                        }
                     }
-                    if (x == 2)
+                    if (y == "N" || y = "n")
+                    {
+                        System.Console.WriteLine("podaj nazwę pliku");
+                        name = Console.ReadLine();
+                        try
+                        {
+                            System.Diagnostics.Process.Start(name + ".doc");
+                        }
+                        catch
+                        {
+                            System.Console.WriteLine("Bład nie znaleziono pliku");
+                        }
+                       
+                    }
+                    if (y == "n" || y == "n" || y == "n" || y == "n")
+                    {
+                        System.Console.WriteLine("błąd wyboru");
+                    }
+                        if (x == 2)
                     {
                         try
                         {
@@ -55,7 +79,7 @@ namespace ConsoleApp1
                                 foreach (char y in text)
                                 {
                                     string n = Convert.ToString(y);
-                                    if (n != "," && n != "." && n != ";" && n != "'" && n != "?" && n != "!" && n != "-" && n != ":")
+                                    if (n != "," || n != "." || n != ";" || n != "'" || n != "?" || n != "!" || n != "-" || n != ":")
                                     {
                                         count++;
 
