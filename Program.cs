@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +11,8 @@ namespace ConsoleApp1
     class Program
     {
         static void Main(string[] args)
-        { int x;
+        {
+            int x;
 
             do
             {
@@ -23,7 +26,20 @@ namespace ConsoleApp1
                 System.Console.WriteLine("8 - wyjdz z programu");
                 x = Convert.ToInt32(Console.ReadLine());
 
+                
+                    if (x == 1)
+                {
+                    WebClient webClient = new WebClient();
+                    try
+                    {
+                        webClient.DownloadFile("https://s3.zylowski.net/public/input/5.txt", "5.txt");
+                    }
+                    finally
+                    {
 
+                    }   
+                    
+                }
 
             }
             while (x != 8);
@@ -31,3 +47,8 @@ namespace ConsoleApp1
         }
     }
 }
+
+
+
+
+
