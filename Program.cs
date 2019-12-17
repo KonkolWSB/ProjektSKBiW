@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ConsoleApp1
 {
@@ -14,7 +15,7 @@ namespace ConsoleApp1
         {
             int x;
             int characters = 0;
-            int words = 0;
+            int count = 0;
             int punctuationmarks = 0;
             int sentences = 0;
             do
@@ -79,15 +80,17 @@ namespace ConsoleApp1
                                 Console.WriteLine("Blad");
                                 break;
                             }
-                            foreach (char znak in text)
+                            string pattern = "[^\\w]";
+                            string[] words = null;
+                            int i = 0;
+                            words = Regex.Split(text, pattern, RegexOptions.IgnoreCase);
+                            for (i = words.GetLowerBound(0); i <= words.GetUpperBound(0); i++)
                             {
-                                string a = Convert.ToString(znak);
-                                if (a == " ")
-                                {
-                                    words++;
-                                }
+                                if (words[i].ToString() == string.Empty || words[i].Length <= 1)
+                                    count = count - 1;
+                                count = count + 1;
                             }
-                            Console.WriteLine("Ilosc slow: " + words);
+                            Console.WriteLine("Count of words longer than one char: " + count.ToString());
                         }
                     }
                     catch
@@ -111,7 +114,7 @@ namespace ConsoleApp1
                             foreach (char znak in text)
                             {
                                 string a = Convert.ToString(znak);
-                                if (a=="?" || a == "."  )
+                                if (a == "?" || a == ".")
                                 {
                                     punctuationmarks++;
                                 }
@@ -182,7 +185,7 @@ namespace ConsoleApp1
                 }
                 if (x == 7)
                 {
-                    string[] lines = { "Litery: " + characters.ToString(), "Słowa: " + words.ToString(), "Znaki interpunkcyjne: " + punctuationmarks.ToString(), "Zdania: " + sentences.ToString() };
+                    string[] lines = { "Litery: " + characters.ToString(), "Count of words longer than one char: " + count.ToString(), "Znaki interpunkcyjne: " + punctuationmarks.ToString(), "Zdania: " + sentences.ToString() };
                     System.IO.File.WriteAllLines("statystyki.txt", lines);
                 }
                 if (x == 8)
