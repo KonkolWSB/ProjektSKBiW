@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,24 +24,51 @@ namespace ConsoleApp1
             do
             {
                 System.Console.WriteLine("1 - pobierz plik z internetu");
-                System.Console.WriteLine("2 - zlicz liczbÄ™ liter z pliku");
-                System.Console.WriteLine("3 - zlicz liczbÄ™ wyrazÃ³w z pliku");
-                System.Console.WriteLine("4 - zlicz liczbe znakÃ³w interpunkcyjnych");
+                System.Console.WriteLine("2 - zlicz liczbê liter z pliku");
+                System.Console.WriteLine("3 - zlicz liczbê wyrazów z pliku");
+                System.Console.WriteLine("4 - zlicz liczbe znaków interpunkcyjnych");
                 System.Console.WriteLine("5 - zlicz liczbe zdan w pliku");
                 System.Console.WriteLine("6 - wygeneruj raport o uzyciu liter");
                 System.Console.WriteLine("7 - zapisz statystyke");
                 System.Console.WriteLine("8 - wyjdz z programu");
                 x = Convert.ToInt32(Console.ReadLine());
 
-                if (x == 1)
-                {
-                    WebClient webClient = new WebClient();
-                    try
+                if (x == 1){
+                    Console.WriteLine("Czy pobraæ plik z internetu ? [T/N]");
+                    char t = Convert.ToChar(Console.ReadLine());
+                    if (t == 't' | t == 'T')
                     {
-                        webClient.DownloadFile("https://s3.zylowski.net/public/input/5.txt", "5.txt");
+                        Console.WriteLine("Podaj adres pliku");
+                        string address = Convert.ToString(Console.ReadLine());
+                        Console.WriteLine("Podaj nazwê pliku");
+                        string nazwapliku = Convert.ToString(Console.ReadLine());
+                        WebClient webClient = new WebClient();
+                        try
+                        {
+                            webClient.DownloadFile(address, "5.txt");
+                        }
+                        catch (WebException e)
+                        {
+                            Console.WriteLine("Nie odnaleziono pliku");
+                        }
                     }
-                    finally { }
-                }
+                    else
+                    {
+
+
+                        string filename;
+                        Console.WriteLine("Podaj nazwê pliku");
+                        filename = Console.ReadLine();
+                        if (File.Exists(filename))
+                        {
+                            File.OpenRead(filename);
+                            Console.WriteLine("Plik zosta³ otwarty!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Podany plik '{filename}' nie istnieje w œcie¿ce {Directory.GetCurrentDirectory()}");
+                        }
+                    }
                 if (x == 2)
                 {
                     Console.Clear();
@@ -129,7 +156,7 @@ namespace ConsoleApp1
                                     punctuationmarks++;
                                 }
                             }
-                            Console.WriteLine("IloÅ›Ä‡ znakow interpunkcyjnych = " + punctuationmarks);
+                            Console.WriteLine("Iloœæ znakow interpunkcyjnych = " + punctuationmarks);
                         }
                     }
                     catch
@@ -140,30 +167,32 @@ namespace ConsoleApp1
                 if (x == 5)
                 {
                     Console.Clear();
-                    try
                     {
-                        string text = System.IO.File.ReadAllText("5.txt");
+                        string text = System.IO.File.ReadAllText(@"2.txt");
                         if (text != null)
                         {
-                            if (text == null)
+                            int tmp = 0;
+                            for (int i = 0; i < text.Length; i++)
                             {
-                                Console.WriteLine("Blad");
-                                break;
-                            }
-                            foreach (char znak in text)
-                            {
-                                string a = Convert.ToString(znak);
-                                if (a == ".")
+
+                                if (text[i] == '.' || text[i] == '?')
                                 {
-                                    sentences++;
+                                    tmp++;
                                 }
+
                             }
-                            Console.WriteLine("Ilosc zdan: " + sentences);
-                        }
+                            Console.WriteLine("Iloœæ zdañ w pliku = " + tmp);
+
+                     }
+                       
+                     
+
+
                     }
-                    catch
+
+                    catch (FileNotFoundException e)
                     {
-                        Console.WriteLine("error");
+                        Console.WriteLine("B³¹d, nie znaleziono pliku, najpierw pobierz plik");
                     }
                 }
                 if (x == 6)
@@ -206,7 +235,7 @@ namespace ConsoleApp1
               }
               if (x == 7)
               {
-                    string[] lines = {"SÅ‚owa: " + words.ToString(), "Znaki interpunkcyjne: " + punctuationmarks.ToString(), "Zdania: " + sentences.ToString()};
+                    string[] lines = {"S³owa: " + words.ToString(), "Znaki interpunkcyjne: " + punctuationmarks.ToString(), "Zdania: " + sentences.ToString()};
                     System.IO.File.WriteAllLines("statystyki.txt", lines);
                 }
                 if (x == 8)
