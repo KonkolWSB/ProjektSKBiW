@@ -14,10 +14,13 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             int x;
-            int characters = 0;
-            int count = 0;
             int punctuationmarks = 0;
             int sentences = 0;
+            int characters = 0;
+            int count = 0;
+            int vowels = 0;
+            int consonants = 0;
+            int words = 0;
             do
             {
                 System.Console.WriteLine("1 - pobierz plik z internetu");
@@ -51,15 +54,19 @@ namespace ConsoleApp1
                             {
                                 Console.WriteLine("Brak pliku ");
                                 break;
-                            }
+                            }     
                             foreach (char znak in text)
                             {
-                                if (char.IsLetter(znak) == true)
+                                if (char.IsLetter(znak) && (znak == 'a' || znak == 'e' || znak == 'i' || znak == 'o' || znak == 'u'))
                                 {
-                                    characters++;
+                                    vowels++;
+                                }
+                                else
+                                {
+                                    consonants++;
                                 }
                             }
-                            Console.WriteLine("Ilość liter = " + characters);
+                            Console.WriteLine("Samogloski = {0}\n" + "Spolgloski = {1}\n",vowels,consonants);
                         }
                     }
                     catch
@@ -114,12 +121,15 @@ namespace ConsoleApp1
                             foreach (char znak in text)
                             {
                                 string a = Convert.ToString(znak);
-                                if (a == "?" || a == ".")
+
+                                      if (a == "?" || a == ".")
+
+                                if (char.IsLetter(znak) != true && a!= " ")
                                 {
                                     punctuationmarks++;
                                 }
                             }
-                            Console.WriteLine("Ilość znakow '?', '.' = " + punctuationmarks);
+                            Console.WriteLine("Ilość znakow interpunkcyjnych = " + punctuationmarks);
                         }
                     }
                     catch
@@ -177,7 +187,8 @@ namespace ConsoleApp1
                                 }
                             }
                         }
-                    }
+
+           }
                     catch
                     {
                         Console.WriteLine("error");
@@ -186,14 +197,24 @@ namespace ConsoleApp1
                 if (x == 7)
                 {
                     string[] lines = { "Litery: " + characters.ToString(), "Count of words longer than one char: " + count.ToString(), "Znaki interpunkcyjne: " + punctuationmarks.ToString(), "Zdania: " + sentences.ToString() };
+
+                 }
+                 catch
+                 {
+                    Console.WriteLine("error");
+                 }
+              }
+              if (x == 7)
+              {
+                    string[] lines = {"Słowa: " + words.ToString(), "Znaki interpunkcyjne: " + punctuationmarks.ToString(), "Zdania: " + sentences.ToString()};
                     System.IO.File.WriteAllLines("statystyki.txt", lines);
                 }
                 if (x == 8)
-                {
+              {
                     System.IO.File.Delete("statystyki.txt");
                     System.IO.File.Delete("5.txt");
                     System.Environment.Exit(0);
-                }
+              } 
             }
             while (x != 8);
         }
