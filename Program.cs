@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ConsoleApp1
 {
@@ -13,11 +14,13 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             int x;
+            int punctuationmarks = 0;
+            int sentences = 0;
+            int characters = 0;
+            int count = 0;
             int vowels = 0;
             int consonants = 0;
             int words = 0;
-            int punctuationmarks = 0;
-            int sentences = 0;
             do
             {
                 System.Console.WriteLine("1 - pobierz plik z internetu");
@@ -84,15 +87,17 @@ namespace ConsoleApp1
                                 Console.WriteLine("Blad");
                                 break;
                             }
-                            foreach (char znak in text)
+                            string pattern = "[^\\w]";
+                            string[] words = null;
+                            int i = 0;
+                            words = Regex.Split(text, pattern, RegexOptions.IgnoreCase);
+                            for (i = words.GetLowerBound(0); i <= words.GetUpperBound(0); i++)
                             {
-                                string a = Convert.ToString(znak);
-                                if (a == " ")
-                                {
-                                    words++;
-                                }
+                                if (words[i].ToString() == string.Empty || words[i].Length <= 1)
+                                    count = count - 1;
+                                count = count + 1;
                             }
-                            Console.WriteLine("Ilosc slow: " + words);
+                            Console.WriteLine("Count of words longer than one char: " + count.ToString());
                         }
                     }
                     catch
@@ -116,6 +121,9 @@ namespace ConsoleApp1
                             foreach (char znak in text)
                             {
                                 string a = Convert.ToString(znak);
+
+                                      if (a == "?" || a == ".")
+
                                 if (char.IsLetter(znak) != true && a!= " ")
                                 {
                                     punctuationmarks++;
@@ -179,6 +187,17 @@ namespace ConsoleApp1
                                 }
                             }
                         }
+
+           }
+                    catch
+                    {
+                        Console.WriteLine("error");
+                    }
+                }
+                if (x == 7)
+                {
+                    string[] lines = { "Litery: " + characters.ToString(), "Count of words longer than one char: " + count.ToString(), "Znaki interpunkcyjne: " + punctuationmarks.ToString(), "Zdania: " + sentences.ToString() };
+
                  }
                  catch
                  {
